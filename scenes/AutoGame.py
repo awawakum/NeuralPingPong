@@ -98,12 +98,12 @@ class AutoGame(ABCStart):
             self.m_screen.blit(text, (800, 150, 100, 100))
 
             if y_pred == 0:
-                self.m_right.down()
+                self.m_right.up()
             if y_pred == 1:
                 pass
                 #print("RIGHT PREDICT : STAY")
             if y_pred == 2:
-                self.m_right.up()
+                self.m_right.down()
 
             bounce_cords = [(self.m_ball.m_rectPos[0]) / 400,
                             (self.m_ball.m_rectPos[1]) / 400,
@@ -125,12 +125,12 @@ class AutoGame(ABCStart):
             self.m_screen.blit(text, (800, 250, 100, 100))
 
             if y_pred == 0:
-                self.m_left.down()
+                self.m_left.up()
             if y_pred == 1:
                 pass
                 #print("LEFT PREDICT : STAY")
             if y_pred == 2:
-                self.m_left.up()
+                self.m_left.down()
 
             ret = self.m_ball.update()
 
@@ -166,11 +166,11 @@ class AutoGame(ABCStart):
                                 (self.m_ball.m_direction[1]) / 10,
                                 self.m_right.m_rectPos[1] / 400]
                 x = np.array([bounce_cords])
-                if bounce_cords[0] <= self.m_right.m_rectPos[1]:
+                if self.m_ball.m_rectPos[1] <= self.m_right.m_rectPos[1]:
                     #print("->>>UPPER RIGHT")
                     y = np.array([1, 0, 0])
                     self.m_right.m_brain.train(x, y)
-                if bounce_cords[0] >= self.m_right.m_rectPos[1]:
+                if self.m_ball.m_rectPos[1] >= self.m_right.m_rectPos[1]:
                     #print("->>>UNDER RIGHT")
                     y = np.array([0, 0, 1])
                     self.m_right.m_brain.train(x, y)
@@ -182,12 +182,14 @@ class AutoGame(ABCStart):
                                 (self.m_ball.m_rectPos[1]) / 400,
                                 (self.m_ball.m_direction[1]) / 10,
                                 self.m_left.m_rectPos[1] / 400]
+
                 x = np.array([bounce_cords])
-                if bounce_cords[0] <= self.m_left.m_rectPos[1]:
+
+                if self.m_ball.m_rectPos[1] <= self.m_left.m_rectPos[1]:
                     print("->>>UPPER LEFT")
                     y = np.array([1, 0, 0])
                     self.m_left.m_brain.train(x, y)
-                if bounce_cords[0] >= self.m_left.m_rectPos[1]:
+                if self.m_ball.m_rectPos[1] >= self.m_left.m_rectPos[1]:
                     print("->>>UNDER LEFT")
                     y = np.array([0, 0, 1])
                     self.m_left.m_brain.train(x, y)

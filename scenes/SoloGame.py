@@ -53,12 +53,12 @@ class SoloGame(ABCStart):
             y_pred = np.argmax(z)
 
             if y_pred == 0:
-                self.m_right.down()
+                self.m_right.up()
             if y_pred == 1:
                 pass
                 #print("STAY")
             if y_pred == 2:
-                self.m_right.up()
+                self.m_right.down()
 
             ret = self.m_ball.update()
 
@@ -81,11 +81,11 @@ class SoloGame(ABCStart):
                                 (self.m_ball.m_direction[0]) / 10,
                                 self.m_right.m_rectPos[1] / 400]
                 x = np.array([bounce_cords])
-                if bounce_cords[0] <= self.m_right.m_rectPos[1]:
+                if self.m_ball.m_rectPos[1] <= self.m_right.m_rectPos[1]:
                     print("->>>UPPER")
                     y = np.array([1, 0, 0])
                     self.m_right.m_brain.train(x, y)
-                if bounce_cords[0] >= self.m_right.m_rectPos[1]:
+                if self.m_ball.m_rectPos[1] >= self.m_right.m_rectPos[1]:
                     print("->>>UNDER")
                     y = np.array([0, 0, 1])
                     self.m_right.m_brain.train(x, y)

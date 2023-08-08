@@ -153,11 +153,11 @@ class MultiGame(ABCStart):
                                 (self.m_ball.m_direction[0]) / 10,
                                 self.m_right.m_rectPos[1] / 400]
                 x = np.array([bounce_cords])
-                if bounce_cords[0] <= self.m_right.m_rectPos[1]:
+                if self.m_ball.m_rectPos[1] <= self.m_right.m_rectPos[1]:
                     # print("->>>UPPER RIGHT")
                     y = np.array([1, 0, 0])
                     self.m_right.m_brain.train(x, y)
-                if bounce_cords[0] >= self.m_right.m_rectPos[1]:
+                if self.m_ball.m_rectPos[1] >= self.m_right.m_rectPos[1] + self.m_right.m_rectPos[3]:
                     # print("->>>UNDER RIGHT")
                     y = np.array([0, 0, 1])
                     self.m_right.m_brain.train(x, y)
@@ -169,12 +169,13 @@ class MultiGame(ABCStart):
                                 (self.m_ball.m_rectPos[1]) / 400,
                                 (self.m_ball.m_direction[0]) / 10,
                                 self.m_left.m_rectPos[1] / 400]
+
                 x = np.array([bounce_cords])
-                if bounce_cords[0] <= self.m_left.m_rectPos[1]:
+                if self.m_ball.m_rectPos[1] <= self.m_left.m_rectPos[1]:
                     print("->>>UPPER LEFT")
                     y = np.array([1, 0, 0])
                     self.m_left.m_brain.train(x, y)
-                if bounce_cords[0] >= self.m_left.m_rectPos[1]:
+                if self.m_ball.m_rectPos[1] >= self.m_left.m_rectPos[1] + self.m_left.m_rectPos[3]:
                     print("->>>UNDER LEFT")
                     y = np.array([0, 0, 1])
                     self.m_left.m_brain.train(x, y)
